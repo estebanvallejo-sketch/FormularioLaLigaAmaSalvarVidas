@@ -2,63 +2,309 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulario de registro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Simposio de Oncología | Liga AMA</title>
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:Arial;background:#f0f2f5;padding:20px;}
-    .formulario{max-width:800px;margin:auto;background:white;border-radius:20px;box-shadow:0 10px 25px rgba(0,0,0,0.1);overflow:hidden;}
-    .titulo{background:#1e3c72;color:white;padding:20px;text-align:center;}
-    .cuerpo{padding:25px;}
-    .campo{margin-bottom:15px;}
-    label{display:block;font-weight:bold;margin-bottom:5px;}
-    input,select{width:100%;padding:10px;border:1px solid #ccc;border-radius:12px;}
-    .check{margin:20px 0;background:#f9f9f9;padding:12px;border-radius:16px;}
-    .check label{display:flex;gap:10px;font-weight:normal;}
-    button{background:#1e3c72;color:white;border:none;padding:12px;width:100%;border-radius:40px;font-size:1.1rem;font-weight:bold;cursor:pointer;}
-    .mensaje{margin-top:20px;padding:12px;border-radius:30px;text-align:center;display:none;}
-    .exito{background:#d4edda;color:#155724;}
-    .error{background:#f8d7da;color:#721c24;}
-    .enviando{background:#cce5ff;color:#004085;}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at 10% 30%, #030a1a, #02102e);
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Tarjeta principal con efecto glass + borde neón */
+    .glass-card {
+      max-width: 1000px;
+      width: 100%;
+      background: rgba(8, 17, 53, 0.55);
+      backdrop-filter: blur(12px);
+      border-radius: 48px;
+      border: 1px solid rgba(243, 33, 139, 0.3);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(243, 33, 139, 0.1);
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+
+    /* Header futurista */
+    .futuristic-header {
+      background: linear-gradient(115deg, #081135 0%, #0c1b4a 100%);
+      padding: 2rem 2rem 1.8rem;
+      text-align: center;
+      position: relative;
+      border-bottom: 2px solid #f3218b;
+    }
+
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+    }
+
+    .logo {
+      max-height: 85px;
+      width: auto;
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,0.3));
+      transition: filter 0.3s;
+    }
+
+    .badge-neon {
+      background: #f3218b;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 20px;
+      border-radius: 60px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: white;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 6px #f3218b;
+    }
+
+    .futuristic-header h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff 30%, #f8bfd3 80%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .futuristic-header h1 span {
+      background: linear-gradient(135deg, #f3218b, #ff99c2);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .event-details {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+      margin: 20px 0 8px;
+    }
+
+    .detail-chip {
+      background: rgba(243, 33, 139, 0.12);
+      backdrop-filter: blur(4px);
+      padding: 6px 18px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #f9eef3;
+      border: 1px solid rgba(243, 33, 139, 0.4);
+    }
+
+    .slogan-vibrant {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #ffc0d6;
+      margin-top: 12px;
+      letter-spacing: -0.2px;
+    }
+
+    /* Formulario */
+    .form-body-modern {
+      padding: 2rem 2rem 2rem;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .two-columns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .input-group {
+      flex: 1 1 calc(50% - 24px);
+      min-width: 220px;
+    }
+
+    .input-group.full {
+      flex: 1 1 100%;
+    }
+
+    label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #cfd9ff;
+      margin-bottom: 8px;
+    }
+
+    .required-mark {
+      color: #f3218b;
+      margin-left: 4px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px 18px;
+      background: #0c132b;
+      border: 1px solid #2a3560;
+      border-radius: 28px;
+      font-size: 0.9rem;
+      color: white;
+      transition: all 0.2s ease;
+      outline: none;
+      font-family: inherit;
+    }
+
+    input:focus, select:focus {
+      border-color: #f3218b;
+      box-shadow: 0 0 0 3px rgba(243, 33, 139, 0.3);
+      background: #0c1125;
+    }
+
+    .checkbox-wrapper {
+      background: rgba(243, 33, 139, 0.08);
+      border-radius: 36px;
+      padding: 16px 20px;
+      margin: 18px 0 20px;
+      border-left: 4px solid #f3218b;
+    }
+
+    .checkbox-wrapper label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 500;
+      text-transform: none;
+      font-size: 0.85rem;
+      color: #eef2ff;
+      cursor: pointer;
+    }
+
+    .checkbox-wrapper input {
+      width: 20px;
+      height: 20px;
+      accent-color: #f3218b;
+      background: #0c132b;
+    }
+
+    .btn-futuristic {
+      background: linear-gradient(95deg, #f3218b, #c9186e);
+      border: none;
+      width: 100%;
+      padding: 15px;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 60px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 6px 18px rgba(243, 33, 139, 0.4);
+      letter-spacing: 0.5px;
+    }
+
+    .btn-futuristic:hover {
+      transform: scale(1.01);
+      background: linear-gradient(95deg, #ff3d9e, #e01a7a);
+      box-shadow: 0 12px 24px -5px #f3218b;
+    }
+
+    .mensaje {
+      margin-top: 22px;
+      padding: 12px;
+      border-radius: 60px;
+      text-align: center;
+      font-weight: 600;
+      display: none;
+      font-size: 0.85rem;
+    }
+
+    .exito { background: #0e4429; color: #bef5d5; border-left: 4px solid #27e083; }
+    .error { background: #5e1e36; color: #ffc0d6; border-left: 4px solid #f3218b; }
+    .enviando { background: #192c5e; color: #bfd6ff; }
+
+    .social-footer-modern {
+      text-align: center;
+      padding: 1.2rem;
+      background: rgba(0,0,0,0.3);
+      font-size: 0.8rem;
+      color: #b9c8ff;
+      border-top: 1px solid rgba(243, 33, 139, 0.3);
+      backdrop-filter: blur(4px);
+    }
+
+    @media (max-width: 700px) {
+      .input-group { flex: 1 1 100%; }
+      .futuristic-header h1 { font-size: 1.8rem; }
+      .form-body-modern { padding: 1.5rem; }
+    }
   </style>
 </head>
 <body>
-<div class="formulario">
-  <div class="titulo">
-    <h2>Formulario de registro</h2>
-    <p>Completa los datos. Los campos con * son obligatorios.</p>
+<div class="glass-card">
+  <div class="futuristic-header">
+    <div class="logo-container">
+      <!-- ✅ NUEVO LOGO: https://laligaamasalvarvidas.org.co/Archivos/Imagenes/laliga-logos.png -->
+      <img class="logo" src="https://laligaamasalvarvidas.org.co/Archivos/Imagenes/laliga-logos.png" alt="Liga AMA Salvar Vidas" onerror="this.src='https://placehold.co/140x60?text=LIGA+AMA';">
+    </div>
+    <div class="badge-neon">⚡ SIMPOSIO REGIONAL 2025 ⚡</div>
+    <h1>Actualización en <span>Oncología</span></h1>
+    <div class="event-details">
+      <span class="detail-chip">📅 25 - 26 JUNIO</span>
+      <span class="detail-chip">📍 EXPOFUTURO · Salón Risaralda 2</span>
+    </div>
+    <div class="slogan-vibrant">✨ 50 años innovando con tecnología que salva vidas ✨</div>
   </div>
-  <div class="cuerpo">
+
+  <div class="form-body-modern">
     <form id="miFormulario">
-      <div class="campo"><label>Nombre completo *</label><input type="text" id="nombre" required></div>
-      <div class="campo"><label>Cédula *</label><input type="text" id="cedula" required></div>
-      <div class="campo"><label>Profesión / Estudiante *</label><select id="profesion" required><option value="">Selecciona</option><option>Profesional</option><option>Estudiante</option><option>Otro</option></select></div>
-      <div class="campo"><label>Especialidad</label><input type="text" id="especialidad"></div>
-      <div class="campo"><label>Ciudad *</label><input type="text" id="ciudad" required></div>
-      <div class="campo"><label>Teléfono *</label><input type="tel" id="telefono" required></div>
-      <div class="campo"><label>Correo electrónico *</label><input type="email" id="correo" required></div>
-      <div class="campo"><label>Institución</label><input type="text" id="institucion"></div>
-      <div class="check"><label><input type="checkbox" id="autorizacion" required> <strong>Autorizo el tratamiento de mis datos personales</strong> *</label></div>
-      <button type="submit">Enviar registro</button>
+      <div class="two-columns">
+        <div class="input-group"><label>Nombre completo <span class="required-mark">*</span></label><input type="text" id="nombre" placeholder="Ej. Ana María López" required></div>
+        <div class="input-group"><label>Cédula <span class="required-mark">*</span></label><input type="text" id="cedula" placeholder="Número de identificación" required></div>
+        <div class="input-group"><label>Profesión / Estudiante <span class="required-mark">*</span></label><select id="profesion" required><option value="">Selecciona</option><option>Profesional</option><option>Estudiante</option><option>Otro</option></select></div>
+        <div class="input-group"><label>Especialidad</label><input type="text" id="especialidad" placeholder="Ej: Oncología, Radioterapia"></div>
+        <div class="input-group"><label>Ciudad <span class="required-mark">*</span></label><input type="text" id="ciudad" placeholder="Ciudad" required></div>
+        <div class="input-group"><label>Teléfono <span class="required-mark">*</span></label><input type="tel" id="telefono" placeholder="Ej: 3001234567" required></div>
+        <div class="input-group"><label>Correo electrónico <span class="required-mark">*</span></label><input type="email" id="correo" placeholder="tucorreo@ejemplo.com" required></div>
+        <div class="input-group"><label>Institución</label><input type="text" id="institucion" placeholder="Empresa / Universidad"></div>
+      </div>
+
+      <div class="checkbox-wrapper">
+        <label><input type="checkbox" id="autorizacion" required> <strong>Autorizo el tratamiento de mis datos personales</strong> según la política de privacidad. <span class="required-mark">*</span></label>
+      </div>
+
+      <button type="submit" class="btn-futuristic">🚀 INSCRIBIRME AHORA</button>
     </form>
     <div id="mensajeRespuesta" class="mensaje"></div>
+    <div class="social-footer-modern">
+      📱 @laligaamasalvarvidas · La Liga Amasalvarvidas | #OncologíaQueSalvaVidas
+    </div>
   </div>
 </div>
 
 <script>
-  // ⚠️ REEMPLAZA ESTA URL POR LA QUE TIENES EN APPS SCRIPT
+  // ✅ REEMPLAZA ESTA URL por la que FUNCIONA en tu Apps Script (con acceso "Cualquiera")
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw-vcBQBnwX0mNZo_TME6Vcl12llkl7ZKQTYdT_jcZUmwKBBmtM0KqUXwXttbRO-BNqhg/exec';
-  
+
   const form = document.getElementById('miFormulario');
   const mensajeDiv = document.getElementById('mensajeRespuesta');
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     mensajeDiv.style.display = 'none';
-    mensajeDiv.innerHTML = 'Enviando...';
+    mensajeDiv.innerHTML = '📡 Enviando inscripción...';
     mensajeDiv.className = 'mensaje enviando';
     mensajeDiv.style.display = 'block';
-    
+
     const datos = {
       nombre: document.getElementById('nombre').value,
       cedula: document.getElementById('cedula').value,
@@ -70,7 +316,7 @@
       institucion: document.getElementById('institucion').value,
       autorizacion: document.getElementById('autorizacion').checked
     };
-    
+
     try {
       const response = await fetch(SCRIPT_URL, {
         method: 'POST',
@@ -78,17 +324,14 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datos)
       });
-      
-      mensajeDiv.innerHTML = '✅ ¡Registro exitoso! Tus datos han sido guardados.';
+      mensajeDiv.innerHTML = '✅ ¡Inscripción exitosa! Te esperamos en el Simposio.';
       mensajeDiv.className = 'mensaje exito';
       form.reset();
     } catch (error) {
-      mensajeDiv.innerHTML = '❌ Error al enviar. Por favor intenta de nuevo.';
+      mensajeDiv.innerHTML = '❌ Error momentáneo. Por favor reintenta.';
       mensajeDiv.className = 'mensaje error';
-      console.error('Error:', error);
     }
-    
-    setTimeout(() => { mensajeDiv.style.display = 'none'; }, 5000);
+    setTimeout(() => { mensajeDiv.style.display = 'none'; }, 5500);
   });
 </script>
 </body>
