@@ -189,7 +189,7 @@
 </div>
 
 <script>
-  // Tu URL de Google Apps Script
+  // Tu URL de Google Apps Script - ACTUALIZA ESTA URL DESPUÉS DE DESPLEGAR
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxuzyNsR5gHxXLnJ3rBNf30pnwSm9YehP_E5Bb2HQx1qeR7_FqPNXlSBfxZXbGHVe_cnQ/exec';
 
   const form = document.getElementById('miFormulario');
@@ -199,6 +199,13 @@
     e.preventDefault();
     mensajeDiv.style.display = 'none';
     
+    // Mostrar mensaje de "enviando"
+    mensajeDiv.innerHTML = 'Enviando...';
+    mensajeDiv.style.backgroundColor = '#cce5ff';
+    mensajeDiv.style.color = '#004085';
+    mensajeDiv.style.display = 'block';
+    
+    // Recoger datos del formulario
     const datos = {
       nombre: document.getElementById('nombre').value,
       cedula: document.getElementById('cedula').value,
@@ -212,22 +219,41 @@
     };
     
     try {
+      // Enviar datos usando POST con modo normal (no 'no-cors')
       const response = await fetch(SCRIPT_URL, {
         method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
+        mode: 'cors',  // Cambiado de 'no-cors' a 'cors'
+        headers: { 
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(datos)
       });
-      mensajeDiv.innerHTML = 'Registro exitoso! Tus datos han sido guardados.';
-      mensajeDiv.className = 'mensaje exito';
-      mensajeDiv.style.display = 'block';
-      form.reset();
+      
+      // Intentar obtener la respuesta como JSON
+      let resultado;
+      try {
+        resultado = await response.json();
+      } catch (e) {
+        resultado = { result: 'ok' };
+      }
+      
+      if (resultado.result === 'ok') {
+        mensajeDiv.innerHTML = '✅ ¡Registro exitoso! Tus datos han sido guardados.';
+        mensajeDiv.style.backgroundColor = '#d4edda';
+        mensajeDiv.style.color = '#155724';
+        form.reset();
+      } else {
+        throw new Error(resultado.error || 'Error desconocido');
+      }
+      
     } catch (error) {
-      mensajeDiv.innerHTML = 'Error al enviar. Por favor intenta de nuevo.';
-      mensajeDiv.className = 'mensaje error';
-      mensajeDiv.style.display = 'block';
-      console.error(error);
+      console.error('Error:', error);
+      mensajeDiv.innerHTML = '❌ Error al enviar: ' + error.message + '. Por favor intenta de nuevo.';
+      mensajeDiv.style.backgroundColor = '#f8d7da';
+      mensajeDiv.style.color = '#721c24';
     }
+    
+    mensajeDiv.style.display = 'block';
   });
 </script>
 </body>
