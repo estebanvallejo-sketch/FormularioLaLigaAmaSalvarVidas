@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +19,7 @@
     .mensaje{margin-top:20px;padding:12px;border-radius:30px;text-align:center;display:none;}
     .exito{background:#d4edda;color:#155724;}
     .error{background:#f8d7da;color:#721c24;}
+    .enviando{background:#cce5ff;color:#004085;}
   </style>
 </head>
 <body>
@@ -45,8 +46,8 @@
 </div>
 
 <script>
-  // ⚠️ IMPORTANTE: Reemplaza esta URL por la que copiaste de Apps Script
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwXzkaDt7O4Lj8J8wfP8yndeWATmsg_dqtt703GrKflCxoPW5RwXeCkMxb-i5-MG0IqmA/exec';
+  // ⚠️ REEMPLAZA ESTA URL POR LA QUE TIENES EN APPS SCRIPT
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxRR5LG_hIbtueUZ9HjO0OAvViXva_Y6-BRMj6RfYegWEGA0GwKTt8F-GKJXs-8p4luJg/exec';
   
   const form = document.getElementById('miFormulario');
   const mensajeDiv = document.getElementById('mensajeRespuesta');
@@ -55,6 +56,7 @@
     e.preventDefault();
     mensajeDiv.style.display = 'none';
     mensajeDiv.innerHTML = 'Enviando...';
+    mensajeDiv.className = 'mensaje enviando';
     mensajeDiv.style.display = 'block';
     
     const datos = {
@@ -83,7 +85,7 @@
     } catch (error) {
       mensajeDiv.innerHTML = '❌ Error al enviar. Por favor intenta de nuevo.';
       mensajeDiv.className = 'mensaje error';
-      console.error(error);
+      console.error('Error:', error);
     }
     
     setTimeout(() => { mensajeDiv.style.display = 'none'; }, 5000);
