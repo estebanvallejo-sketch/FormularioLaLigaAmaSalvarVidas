@@ -1,191 +1,43 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulario de registro - Liga ama salvar vidas</title>
+  <title>Formulario de registro</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      background: transparent;
-      font-family: Arial, Helvetica, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-    .form-card {
-      max-width: 800px;
-      width: 100%;
-      margin: 0 auto;
-      background: #ffffff;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      overflow: hidden;
-    }
-    .form-header {
-      background: #1e3c72;
-      padding: 20px 25px;
-      color: white;
-      text-align: center;
-    }
-    .form-header h2 {
-      margin: 0;
-      font-size: 1.8rem;
-    }
-    .form-header p {
-      margin: 8px 0 0;
-      opacity: 0.9;
-    }
-    .form-body {
-      padding: 25px;
-    }
-    .form-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-bottom: 15px;
-    }
-    .form-group {
-      flex: 1;
-      min-width: 200px;
-    }
-    label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-    label .required {
-      color: red;
-    }
-    input, select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 12px;
-      box-sizing: border-box;
-      font-size: 1rem;
-    }
-    .checkbox-group {
-      margin: 20px 0;
-      background: #f9f9f9;
-      padding: 12px;
-      border-radius: 16px;
-    }
-    .checkbox-group label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      font-weight: normal;
-    }
-    .checkbox-group input {
-      width: 18px;
-      height: 18px;
-      margin: 0;
-    }
-    button {
-      background: #1e3c72;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      width: 100%;
-      border-radius: 40px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    button:hover {
-      background: #2a5298;
-      transform: scale(1.01);
-    }
-    .mensaje {
-      margin-top: 20px;
-      padding: 12px;
-      border-radius: 30px;
-      text-align: center;
-      font-weight: bold;
-      display: none;
-    }
-    .exito {
-      background: #d4edda;
-      color: #155724;
-    }
-    .error {
-      background: #f8d7da;
-      color: #721c24;
-    }
-    .enviando {
-      background: #cce5ff;
-      color: #004085;
-    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:Arial;background:#f0f2f5;padding:20px;}
+    .formulario{max-width:800px;margin:auto;background:white;border-radius:20px;box-shadow:0 10px 25px rgba(0,0,0,0.1);overflow:hidden;}
+    .titulo{background:#1e3c72;color:white;padding:20px;text-align:center;}
+    .cuerpo{padding:25px;}
+    .campo{margin-bottom:15px;}
+    label{display:block;font-weight:bold;margin-bottom:5px;}
+    input,select{width:100%;padding:10px;border:1px solid #ccc;border-radius:12px;}
+    .check{margin:20px 0;background:#f9f9f9;padding:12px;border-radius:16px;}
+    .check label{display:flex;gap:10px;font-weight:normal;}
+    button{background:#1e3c72;color:white;border:none;padding:12px;width:100%;border-radius:40px;font-size:1.1rem;font-weight:bold;cursor:pointer;}
+    .mensaje{margin-top:20px;padding:12px;border-radius:30px;text-align:center;display:none;}
+    .exito{background:#d4edda;color:#155724;}
+    .error{background:#f8d7da;color:#721c24;}
   </style>
 </head>
 <body>
-<div class="form-card">
-  <div class="form-header">
+<div class="formulario">
+  <div class="titulo">
     <h2>Formulario de registro</h2>
-    <p>Completa los datos para participar. Los campos con * son obligatorios.</p>
+    <p>Completa los datos. Los campos con * son obligatorios.</p>
   </div>
-  <div class="form-body">
+  <div class="cuerpo">
     <form id="miFormulario">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Nombre completo <span class="required">*</span></label>
-          <input type="text" id="nombre" placeholder="Ej: Ana Maria Lopez" required>
-        </div>
-        <div class="form-group">
-          <label>Cedula <span class="required">*</span></label>
-          <input type="text" id="cedula" placeholder="Numero de identificacion" required>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Profesion / Estudiante <span class="required">*</span></label>
-          <select id="profesion" required>
-            <option value="" disabled selected>Selecciona una opcion</option>
-            <option>Profesional</option>
-            <option>Estudiante</option>
-            <option>Otro</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Especialidad</label>
-          <input type="text" id="especialidad" placeholder="Ej: Medicina, Derecho">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Ciudad <span class="required">*</span></label>
-          <input type="text" id="ciudad" placeholder="Ciudad de residencia" required>
-        </div>
-        <div class="form-group">
-          <label>Telefono <span class="required">*</span></label>
-          <input type="tel" id="telefono" placeholder="Ej: 3001234567" required>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Correo electronico <span class="required">*</span></label>
-          <input type="email" id="correo" placeholder="tucorreo@ejemplo.com" required>
-        </div>
-        <div class="form-group">
-          <label>Institucion</label>
-          <input type="text" id="institucion" placeholder="Empresa / Universidad / Colegio">
-        </div>
-      </div>
-      <div class="checkbox-group">
-        <label>
-          <input type="checkbox" id="autorizacion" required>
-          <strong>Autorizo el tratamiento de mis datos personales</strong> segun la politica de privacidad. <span class="required">*</span>
-        </label>
-      </div>
+      <div class="campo"><label>Nombre completo *</label><input type="text" id="nombre" required></div>
+      <div class="campo"><label>Cédula *</label><input type="text" id="cedula" required></div>
+      <div class="campo"><label>Profesión / Estudiante *</label><select id="profesion" required><option value="">Selecciona</option><option>Profesional</option><option>Estudiante</option><option>Otro</option></select></div>
+      <div class="campo"><label>Especialidad</label><input type="text" id="especialidad"></div>
+      <div class="campo"><label>Ciudad *</label><input type="text" id="ciudad" required></div>
+      <div class="campo"><label>Teléfono *</label><input type="tel" id="telefono" required></div>
+      <div class="campo"><label>Correo electrónico *</label><input type="email" id="correo" required></div>
+      <div class="campo"><label>Institución</label><input type="text" id="institucion"></div>
+      <div class="check"><label><input type="checkbox" id="autorizacion" required> <strong>Autorizo el tratamiento de mis datos personales</strong> *</label></div>
       <button type="submit">Enviar registro</button>
     </form>
     <div id="mensajeRespuesta" class="mensaje"></div>
@@ -193,22 +45,18 @@
 </div>
 
 <script>
-  // NUEVA URL de Google Apps Script
+  // ⚠️ IMPORTANTE: Reemplaza esta URL por la que copiaste de Apps Script
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyh6Xhq33gg18sJpRYHvrcULSiVbVBhRqg-HRhRsT24RJOWxSqj6lNYZ25oF3BYGRLxOw/exec';
-
+  
   const form = document.getElementById('miFormulario');
   const mensajeDiv = document.getElementById('mensajeRespuesta');
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     mensajeDiv.style.display = 'none';
-    
-    // Mostrar mensaje de "enviando"
     mensajeDiv.innerHTML = 'Enviando...';
-    mensajeDiv.className = 'mensaje enviando';
     mensajeDiv.style.display = 'block';
     
-    // Recoger datos del formulario
     const datos = {
       nombre: document.getElementById('nombre').value,
       cedula: document.getElementById('cedula').value,
@@ -222,47 +70,24 @@
     };
     
     try {
-      // Enviar datos usando POST
       const response = await fetch(SCRIPT_URL, {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json'
-        },
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datos)
       });
       
-      // Intentar obtener la respuesta como JSON
-      let resultado;
-      try {
-        resultado = await response.json();
-      } catch (e) {
-        resultado = { result: 'ok' };
-      }
-      
-      if (resultado.result === 'ok') {
-        mensajeDiv.innerHTML = '¡Registro exitoso! Tus datos han sido guardados.';
-        mensajeDiv.className = 'mensaje exito';
-        form.reset();
-      } else {
-        throw new Error(resultado.error || 'Error desconocido');
-      }
-      
+      mensajeDiv.innerHTML = '✅ ¡Registro exitoso! Tus datos han sido guardados.';
+      mensajeDiv.className = 'mensaje exito';
+      form.reset();
     } catch (error) {
-      console.error('Error:', error);
-      mensajeDiv.innerHTML = 'Error al enviar: ' + error.message + '. Por favor intenta de nuevo.';
+      mensajeDiv.innerHTML = '❌ Error al enviar. Por favor intenta de nuevo.';
       mensajeDiv.className = 'mensaje error';
+      console.error(error);
     }
     
-    mensajeDiv.style.display = 'block';
-    
-    // Ocultar el mensaje automáticamente después de 5 segundos
-    setTimeout(() => {
-      mensajeDiv.style.display = 'none';
-    }, 5000);
+    setTimeout(() => { mensajeDiv.style.display = 'none'; }, 5000);
   });
-</script>
-</body>
-</html>
 </script>
 </body>
 </html>
